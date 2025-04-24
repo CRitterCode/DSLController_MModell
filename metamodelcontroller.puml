@@ -1,68 +1,69 @@
 @startuml
 
-class controller{}
-class name{}
-interface attribute{}
-class parameter{
+class MController{}
+class MName{}
+interface IMAttribute{}
+class MParameter{
     string name
     Type type
     HttpBindings binding
 }
 
-class action{
+class MAction{
     bool ValidateModelBinding
 }
-class authorize{
+class MAuthorize{
     Roles role
 }
-class route{
+class MRoute{
     string path
 }
-interface result{}
-class antiforgery{
+interface MResult{}
+class MAntiforgery{
     
 }
-class httpmethod{
-    
+class MHttpmethod{
+    HttpMethod httpmethod
 }
-class IActionResult{}
-class T{}
+class "ActionResult<T>" as MActionResult {}
+class IMActionResult{}
 
-enum HttpBindings{
+enum MHttpBindings{
     Query, Route, Body...
 }
-enum Roles {
+enum MRoles {
     Admin, User
 }
-class consumes{
+class MConsumes{
     application/json
 }
-class produces{
+class MProduces{
     application/json
 }
 
 
-controller *--> action
-controller *--> attribute
-controller *--> name
 
-action *-> attribute
-action  *--> parameter
-action *--> result
-action *-> name
+MController *--> MAction
+MController *-> IMAttribute
+MController *--> MName
 
-antiforgery ..|> attribute
-authorize ..|> attribute
-httpmethod ..|> attribute
-consumes ..|> attribute
-produces ..|> attribute
-route ..|> attribute
+MAction *--> IMAttribute
+MAction  *--> MParameter
+MAction *--> MResult
+MAction *--> MName
 
-parameter --> HttpBindings
-authorize --> Roles
+MAntiforgery ..|> IMAttribute
+MAuthorize .|> IMAttribute
+MHttpmethod ..|> IMAttribute
+MConsumes ..|> IMAttribute
+MProduces ..|> IMAttribute
+MRoute ..|> IMAttribute
 
-T ..|> result
-IActionResult ..|> result
+MParameter --> MHttpBindings
+MAuthorize --> MRoles
+
+MActionResult ..|> MResult
+IMActionResult ..|> MResult
 
 
 

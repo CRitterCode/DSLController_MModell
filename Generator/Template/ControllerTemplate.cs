@@ -5,6 +5,7 @@
         public string Name { get; set; }
         public List<string> Attributes { get; set; } = new();
         public List<ActionTemplate> Actions { get; set; } = new();
+        public List<string> Namespaces { get; set; } = new();
     }
 
 }

@@ -16,7 +16,8 @@ namespace DSLController_MModell.Generator
             {
                 Name = ctrl.Name.Name+"Controller : ControllerBase",
                 Attributes = ctrl.Attributes.Select(AttributeHelper.Render).ToList(),
-                Actions = ctrl.Actions.Select(ActionGenerator.Generate).ToList()
+                Actions = ctrl.Actions.Select(ActionGenerator.Generate).ToList(),
+                Namespaces = new List<string> { "Microsoft.AspNetCore.Mvc", "Application.Exceptions", "Microsoft.AspNetCore.Http", "Microsoft.AspNetCore.Mvc" }
             }).ToList();
         }
     }

@@ -2,7 +2,7 @@
 using DSLController_MModell.MetaModell.Action;
 using DSLController_MModell.MetaModell.Attribute;
 
-namespace DSLController_MModell
+namespace DSLController_MModell.Builder
 {
     public class ControllerBuilder
     {

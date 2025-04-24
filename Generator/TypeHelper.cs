@@ -13,6 +13,7 @@ namespace DSLController_MModell.Generator
             if (type.IsGenericType)
             {
                 var name = type.GetGenericTypeDefinition().Name.Split('`')[0];
+                name = name.StartsWith("M") ? name.Substring(1) : name;
                 var args = type.GetGenericArguments().Select(GetFullTypeAsString);
                 return $"{name}<{string.Join(", ", args)}>";
             }
