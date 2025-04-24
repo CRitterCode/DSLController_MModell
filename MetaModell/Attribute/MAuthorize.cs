@@ -2,7 +2,12 @@
 {
     public class MAuthorize : IMAttribute
     {
-        public MRole Role { get; set; }
+        public MRole[] Roles { get; set; }
+
+        public MAuthorize(params MRole[] roles)
+        {
+            Roles = roles;
+        }
     }
 
 }

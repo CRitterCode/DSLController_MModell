@@ -2,7 +2,7 @@
 {
     public enum MRole
     {
-        Authorized, AllowAnonymus, Admin, User
+        AllowAnonymus, Admin, User
     }
 
 }

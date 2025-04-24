@@ -14,30 +14,25 @@ namespace DSLController_MModell
         public ActionBuilder(ControllerBuilder parent, MController controller, MAction action)
         {
             _parent = parent;
-            _controller = controller;            
+            _controller = controller;
             _action = action;
         }
 
-        public ActionBuilder WithParameter<T>(string name, MHttpBinding binding = MHttpBinding.Body)
+        public ActionBuilder WithParameter<T>(string name, MHttpBinding binding = MHttpBinding.None)
         {
-            _action.Parameters.Add(new MParameter
-            {
-                Name = name,
-                Type = typeof(T),
-                Binding = binding
-            });
+            _action.Parameters.Add(new MParameter(name, typeof(T), binding));
             return this;
         }
 
         public ActionBuilder WithRoute(string route)
         {
-            _action.Attributes.Add(new MRoute { Route = route });
+            _action.Attributes.Add(new MRoute(route));
             return this;
         }
 
-        public ActionBuilder WithAuthorize(MRole role = MRole.Authorized)
+        public ActionBuilder WithAuthorize(params MRole[] role)
         {
-            _action.Attributes.Add(new MAuthorize { Role = role });
+            _action.Attributes.Add(new MAuthorize(role));
             return this;
         }
 
@@ -49,13 +44,13 @@ namespace DSLController_MModell
 
         public ActionBuilder Returns<T>() where T : IMResult, new()
         {
-            _action.Result = new T().GetType().Name;
+            _action.Result = new T();
             return this;
         }
 
         public ActionBuilder WithConsumes(string mediaType)
         {
-            _action.Attributes.Add(new MConsumes { MediaType = mediaType });
+            _action.Attributes.Add(new MConsumes(mediaType));
             return this;
         }
 
@@ -67,7 +62,7 @@ namespace DSLController_MModell
 
         public ActionBuilder WithProduces(string mediaType)
         {
-            _action.Attributes.Add(new MProduces { MediaType = mediaType });
+            _action.Attributes.Add(new MProduces(mediaType));
             return this;
         }
         public ControllerBuilder Done()

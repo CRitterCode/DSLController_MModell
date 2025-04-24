@@ -7,6 +7,8 @@
         {
             HttpMethod = httpMethod;
         }
+
+        public string GetValue() => HttpMethod.ToString();
     }
 
 }

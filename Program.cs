@@ -3,72 +3,60 @@ using DSLController_MModell.MetaModell.Result;
 using DSLController_MModell.MetaModell.Attribute;
 using DSLController_MModell.MetaModell.Action;
 using Scriban;
+using DSLController_MModell.Generator;
 
 
 var builder = ControllerBuilder
     .Init("User")
     .WithAuthorize()
-    .WithRoute("/")
-    .WithRoute("Index")
+    .WithRoute("api/[Controller]")
     .WithAction("Get", HttpMethod.Get)
         .WithParameter<int>("id", MHttpBinding.Route)
-        .WithAuthorize(MRole.User)
+        .WithAuthorize(MRole.User, MRole.Admin)
         .Returns<MIActionResult>()
     .Controller("Backoffice")
         .WithRoute("opentimes")
-        .WithAuthorize()
+        .WithAuthorize(MRole.AllowAnonymus)
         .WithAntiforgery(true)
         .WithAction("SetOpenTimes", HttpMethod.Post)
             .WithValidateModel()
             .WithRoute("opentimes")
-            .Returns<MT<List<string>>>()
+            .Returns<MActionResult<List<int>>>()
             .Done()
     .Build();
 
 
-foreach (var item in builder)
-{
-    Console.WriteLine(item.Name.Name);
-
-    foreach (var item2 in item.Actions)
-    {
-        Console.WriteLine(item2.Name.Name);
-        Console.WriteLine(item2.Attributes.Count);
-        Console.WriteLine(item2.Validatebinding);
-        foreach (var item3 in item.Attributes)
-        {
-            Console.WriteLine(item3.GetType().GetProperties().FirstOrDefault().GetValue(item3));
-        }
-    }
-}
-
 var templateText = @"
-{{ for controller in controllers }}
-public class {{ controller.name.name }}
+{{ for attr in controller.attributes }}
+{{ attr }}{{ end }}
+public class {{ controller.name }}
 {
     {{ for action in controller.actions }}
-{{ for attr in action.attributes }}
-    {{ attr }}
-{{ end }}
-    public {{ action.result }} {{ action.name.name }}()
-    {
+    {{ for attr in action.attributes }}
+    {{ attr }}{{ end }}
+    public {{ action.returntype }} {{ action.name }}({{ for param in action.parameters }}{{ param.binding }} {{ param.type }} {{ param.name }}{{ end }}){
         {{ if action.validatebinding }}
-            if (!ModelState.IsValid()){
-                return BadRequest(ModelState);
-                }
-        {{ end }}
-    }
-
+     if (ModelState.IsValid){
+        return BadRequest(ModelState);
+     }{{ end}}
+        throw new NotImplementedException();
+     }
     {{ end }}
 }
-{{ end }}
 ";
 
+var generators = ControllerGenerator.Generate(builder);
 var template = Template.Parse(templateText);
-var result = template.Render(new { controllers = builder });
+
+foreach (var generator in generators)
+{
+    var result = template.Render(new { controller = generator });
+    Console.WriteLine(result);
+}
 
 //var filePath = "D:\\projects\\private\\DSLController_MModell\\generated.cs";
 //File.WriteAllText(filePath, result);
 
-Console.WriteLine(result);
+
+
 

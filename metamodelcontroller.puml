@@ -1,0 +1,71 @@
+@startuml
+
+class controller{}
+class name{}
+interface attribute{}
+class parameter{
+    string name
+    Type type
+    HttpBindings binding
+}
+
+class action{
+    bool ValidateModelBinding
+}
+class authorize{
+    Roles role
+}
+class route{
+    string path
+}
+interface result{}
+class antiforgery{
+    
+}
+class httpmethod{
+    
+}
+class IActionResult{}
+class T{}
+
+enum HttpBindings{
+    Query, Route, Body...
+}
+enum Roles {
+    Admin, User
+}
+class consumes{
+    application/json
+}
+class produces{
+    application/json
+}
+
+
+controller *--> action
+controller *--> attribute
+controller *--> name
+
+action *-> attribute
+action  *--> parameter
+action *--> result
+action *-> name
+
+antiforgery ..|> attribute
+authorize ..|> attribute
+httpmethod ..|> attribute
+consumes ..|> attribute
+produces ..|> attribute
+route ..|> attribute
+
+parameter --> HttpBindings
+authorize --> Roles
+
+T ..|> result
+IActionResult ..|> result
+
+
+
+
+
+@enduml

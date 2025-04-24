@@ -4,9 +4,9 @@
 
         public bool IgnoreAntiforgery { get; set; }
 
-        public MAntiforgery(bool ignoreAntiForgery)
+        public MAntiforgery(bool ignoreAntiforgery)
         {
-            IgnoreAntiforgery = ignoreAntiForgery;
+            IgnoreAntiforgery = ignoreAntiforgery;
         }
     }
 

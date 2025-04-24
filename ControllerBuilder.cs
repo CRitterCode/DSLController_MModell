@@ -22,13 +22,13 @@ namespace DSLController_MModell
 
         public ControllerBuilder WithRoute(string route)
         {
-            _currentController.Attributes.Add(new MRoute { Route = route });
+            _currentController.Attributes.Add(new MRoute(route));
             return this;
         }
 
-        public ControllerBuilder WithAuthorize(MRole role = MRole.Authorized)
+        public ControllerBuilder WithAuthorize(params MRole[] roles)
         {
-            _currentController.Attributes.Add(new MAuthorize { Role = role });
+            _currentController.Attributes.Add(new MAuthorize(roles));
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace DSLController_MModell
         {
             _currentController = new MController();
             _currentController.Name.Name = name;
-            _controllers.Add(_currentController);            
+            _controllers.Add(_currentController);
             return this;
         }
 

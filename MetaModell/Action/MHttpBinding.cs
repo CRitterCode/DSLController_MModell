@@ -2,7 +2,7 @@
 {
     public enum MHttpBinding
     {
-        Query, Route, Body
+        None, Query, Route, Body
     }
 
 }

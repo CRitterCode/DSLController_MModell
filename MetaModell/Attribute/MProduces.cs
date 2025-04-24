@@ -3,6 +3,11 @@
     public class MProduces : IMAttribute
     {
         public string MediaType { get; set; } = "application/json";
+
+        public MProduces(string mediaType)
+        {
+            MediaType = mediaType;
+        }
     }
 
 }

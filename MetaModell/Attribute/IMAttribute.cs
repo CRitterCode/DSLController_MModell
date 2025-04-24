@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace DSLController_MModell.MetaModell.Attribute
 {
-    public interface IMAttribute { }
+    public interface IMAttribute {  }
 
 }
