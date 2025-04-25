@@ -2,11 +2,11 @@
 {
     public class MAntiforgery : IMAttribute {
 
-        public bool IgnoreAntiforgery { get; set; }
+        public bool isAntiforgery { get; set; }
 
         public MAntiforgery(bool ignoreAntiforgery)
         {
-            IgnoreAntiforgery = ignoreAntiforgery;
+            isAntiforgery = ignoreAntiforgery;
         }
     }
 

@@ -9,12 +9,10 @@ namespace DSLController_MModell.Builder
         private readonly HashSet<MController> _controllers = new();
         private MController _currentController = new();
 
-        public static ControllerBuilder Init(string name)
+        public static ControllerBuilder Init(string name, string nspace)
         {
             var builder = new ControllerBuilder();
-            builder._currentController = new MController();
-            builder._currentController.Name = new MName(name);
-            builder._controllers.Add(builder._currentController);
+            builder.Controller(name, nspace);
             return builder;
         }
 
@@ -32,9 +30,9 @@ namespace DSLController_MModell.Builder
             return this;
         }
 
-        public ControllerBuilder WithAntiforgery(bool ignoreAntiforgery = false)
+        public ControllerBuilder SetAntiforgery(bool isAntiforgery)
         {
-            _currentController.Attributes.Add(new MAntiforgery(ignoreAntiforgery));
+            _currentController.Attributes.Add(new MAntiforgery(isAntiforgery));
             return this;
         }
 
@@ -46,10 +44,11 @@ namespace DSLController_MModell.Builder
             return new ActionBuilder(this, _currentController, action);
         }
 
-        public ControllerBuilder Controller(string name)
+        public ControllerBuilder Controller(string name, string nspace)
         {
             _currentController = new MController();
-            _currentController.Name.Name = name;
+            _currentController.ControllerName.Name = name;
+            _currentController.Namespace.Name = nspace;
             _controllers.Add(_currentController);
             return this;
         }

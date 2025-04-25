@@ -16,7 +16,7 @@ namespace DSLController_MModell.Generator
                 MHttpMethod m => $"[Http{m.HttpMethod.ToString()[0]}{m.HttpMethod.ToString().Substring(1).ToLower()}]",
                 MAuthorize a => a.Roles.Length == 0 ? "[Authorize]" : $"[Authorize(Roles=\"{string.Join(",",a.Roles)}\")]",
                 MRoute r => $"[Route(\"{r.Route}\")]",
-                MAntiforgery af => af.IgnoreAntiforgery ? "[IgnoreAntiforgeryToken]" : "[ValidateAntiForgeryToken]",
+                MAntiforgery af => af.isAntiforgery ? "[ValidateAntiForgeryToken]" : "[IgnoreAntiforgeryToken]",
                 MConsumes c => $"[Consumes(\"{c.MediaType}\")]",
                 MProduces p => $"[Produces(\"{p.MediaType}\")]",
                 _ => $"[UnknownAttribute: {attr.GetType().Name}]"

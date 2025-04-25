@@ -71,7 +71,7 @@ namespace DSLController_MModell.Builder
             return _parent;
         }
 
-        public ControllerBuilder Controller(string name) => Done().Controller(name);
+        public ControllerBuilder Controller(string name, string nspace) => Done().Controller(name, nspace);
     }
 
 }

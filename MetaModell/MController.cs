@@ -7,7 +7,8 @@ namespace DSLController_MModell.MetaModell
     {
         public HashSet<MAction> Actions { get; } = new();
         public HashSet<IMAttribute> Attributes { get; } = new();
-        public MName Name { get; set; } = new();
+        public MName ControllerName { get; set; } = new();
+        public MName Namespace { get; set; } = new();
     }
 
 }

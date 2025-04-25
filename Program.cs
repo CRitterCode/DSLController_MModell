@@ -1,28 +1,32 @@
 ﻿using DSLController_MModell.MetaModell.Result;
 using DSLController_MModell.MetaModell.Attribute;
 using DSLController_MModell.MetaModell.Action;
-using Scriban;
 using DSLController_MModell.Generator;
 using DSLController_MModell.Builder;
 using DSLController_MModell;
 
 
 var builder = ControllerBuilder
-    .Init("User")
+    .Init("User", "DSLController_MModell")
     .WithAuthorize()
-    .WithRoute("api/[Controller]")
+    .WithRoute("api/[controller]")
     .WithAction("Get", HttpMethod.Get)
         .WithParameter<int>("id", MHttpBinding.Route)
         .WithAuthorize(MRole.User, MRole.Admin)
         .Returns<MIActionResult>()
-    .Controller("Backoffice")
+    .Controller("Backoffice", "DSLController_MModell")
         .WithRoute("opentimes")
         .WithAuthorize(MRole.AllowAnonymus)
-        .WithAntiforgery(true)
+        .SetAntiforgery(true)
         .WithAction("SetOpenTimes", HttpMethod.Post)
             .WithValidateModel()
             .WithRoute("opentimes")
             .Returns<MActionResult<List<int>>>()
+            .Done()
+        .WithAction("GetOpenTimes", HttpMethod.Get)
+            .WithProduces("application/json")
+            .WithRoute("opentimes/all")
+            .Returns<MIActionResult>()
             .Done()
     .Build();
 
