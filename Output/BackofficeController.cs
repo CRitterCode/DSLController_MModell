@@ -7,7 +7,7 @@ namespace DSLController_MModell
 {
 
 [Route("opentimes")]
-[Authorize(Roles="AllowAnonymus")]
+[AllowAnonymous]
 [ValidateAntiForgeryToken]
 public class BackofficeController : ControllerBase{
     
